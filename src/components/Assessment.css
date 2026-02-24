@@ -1,0 +1,133 @@
+/* Main container */
+.assessment-container {
+  max-width: 650px;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Header with icon */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.header .icon {
+  font-size: 28px;
+}
+
+/* Progress text */
+.progress {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 15px;
+}
+
+/* Question card */
+.question-card {
+  margin-top: 20px;
+}
+
+/* Question text */
+.question-text {
+  font-size: 20px;
+  color: #111827;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* Options container */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Option buttons */
+.option-btn {
+  padding: 14px;
+  font-size: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f9fafb;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+/* Hover effect */
+.option-btn:hover {
+  background: #eef2ff;
+  border-color: #6366f1;
+}
+
+/* Selected option */
+.option-btn.selected {
+  background: #4f46e5;
+  color: #ffffff;
+  border-color: #4f46e5;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+/* Skip button */
+.skip-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.skip-btn:hover {
+  background: #d1d5db;
+}
+
+/* Next / Finish button */
+.next-btn {
+  background: #4f46e5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.next-btn:hover {
+  background: #4338ca;
+}
+
+.next-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .assessment-container {
+    margin: 30px 15px;
+    padding: 25px;
+  }
+
+  .question-text {
+    font-size: 17px;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

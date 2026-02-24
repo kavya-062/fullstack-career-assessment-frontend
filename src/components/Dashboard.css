@@ -1,0 +1,110 @@
+.dashboard-page {
+  height: 100vh;
+  background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.dashboard-overlay {
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  padding: 40px;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.dashboard-subtitle {
+  font-size: 16px;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+/* ===== REAL-TIME STATUS & RECOMMENDATIONS ===== */
+.dashboard-info {
+  margin-bottom: 35px;
+}
+
+.status {
+  font-size: 16px;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.status.done {
+  color: #a7f3d0;
+}
+
+.status.pending {
+  color: #fde68a;
+}
+
+.recommend-box {
+  background: rgba(255, 255, 255, 0.18);
+  padding: 14px 18px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+.recommend-box h4 {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.recommend-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommend-box li {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+/* ===== DASHBOARD CARDS ===== */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.dash-card {
+  background: white;
+  color: #333;
+  padding: 25px 15px;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dash-card img {
+  width: 60px;
+  margin-bottom: 15px;
+}
+
+.dash-card h3 {
+  margin-bottom: 8px;
+}
+
+.dash-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.dash-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+}
+
+.logout {
+  background: #ffe5e5;
+}

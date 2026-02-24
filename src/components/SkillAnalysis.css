@@ -1,0 +1,75 @@
+.skill-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  background: #ffffff;
+}
+
+/* LEFT */
+.skill-content {
+  padding: 50px;
+}
+
+.skill-content h1 {
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.skill-item {
+  margin-bottom: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.skill-header {
+  padding: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.skill-details {
+  padding: 14px;
+  background: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+button {
+  margin-top: 25px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  background: #4f46e5;
+  color: white;
+  cursor: pointer;
+}
+
+/* RIGHT */
+.skill-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-image img {
+  width: 90%;
+  height: auto;
+}
+
+/* EMPTY STATE */
+.skill-empty {
+  text-align: center;
+  padding: 80px;
+}
+
+.error-text {
+  color: #dc2626;
+  font-weight: bold;
+}
