@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./App.css";
 
 import Login from "./components/Login";
-import Signup from "./components/Signup"; // ✅ ADD THIS LINE
+import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Assessment from "./components/Assessment";
 import Results from "./components/Results";
@@ -17,8 +17,12 @@ import ManageQuestions from "./components/admin/ManageQuestions";
 import CareerRecommendations from "./components/admin/CareerRecommendations";
 import AdminAnalytics from "./components/admin/AdminAnalytics";
 
+// ✅ Home import (already added)
+import Home from "./components/Home";
+
 export default function App() {
-  const [page, setPage] = useState("login");
+  // 🔴 ONLY CHANGE MADE HERE (login → home)
+  const [page, setPage] = useState("home");
   const [role, setRole] = useState(null);
 
   const [interest, setInterest] = useState({
@@ -39,12 +43,15 @@ export default function App() {
 
   return (
     <>
+      {/* HOME / ABOUT US */}
+      {page === "home" && <Home setPage={setPage} />}
+
       {/* LOGIN */}
       {page === "login" && (
         <Login setPage={setPage} setRole={setRole} />
       )}
 
-      {/* ✅ SIGNUP (ONLY ADDITION) */}
+      {/* SIGNUP */}
       {page === "signup" && <Signup setPage={setPage} />}
 
       {/* STUDENT FLOW */}

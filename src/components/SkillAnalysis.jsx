@@ -1,179 +1,193 @@
 import { useState } from "react";
 
 export default function SkillAnalysis({ setPage }) {
-  // ✅ SINGLE SOURCE OF TRUTH
-  const assessmentStatus =
-    localStorage.getItem("assessmentStatus") || "pending";
+  const status = localStorage.getItem("assessmentStatus");
+  const skills = JSON.parse(localStorage.getItem("skillAnalysis") || "[]");
 
-  // ❌ IMPORTANT: DO NOT READ skillAnalysis unless test is completed
-  const skills =
-    assessmentStatus === "completed"
-      ? JSON.parse(localStorage.getItem("skillAnalysis")) || []
-      : [];
-
-  const [activeSkill, setActiveSkill] = useState(null);
-
-  // 🔒 BEFORE TEST → SHOW MESSAGE ONLY
-  if (assessmentStatus !== "completed") {
+  // ❌ IF ASSESSMENT NOT COMPLETED
+  if (status !== "completed" || skills.length === 0) {
     return (
       <div className="assessment-container">
         <h2>Skill Analysis</h2>
 
-        <p style={{ fontWeight: "bold", marginTop: "15px" }}>
-          🔒 Skills are locked
+        <p style={{ marginTop: "20px", fontWeight: "bold", color: "#dc2626" }}>
+          No skill analysis available
         </p>
 
-        <p style={{ color: "#6b7280", marginTop: "8px" }}>
-          Unlock skills by writing the assessment test.
+        <p style={{ color: "#6b7280" }}>
+          Please complete the assessment to view your skill analysis.
         </p>
 
         <button
           className="next-btn"
-          style={{ marginTop: "20px" }}
-          onClick={() => setPage("assessment")}
+          style={{ marginTop: "30px" }}
+          onClick={() => setPage("dashboard")}
         >
-          Write Test
+          Back to Dashboard
         </button>
       </div>
     );
   }
 
-  // ✅ SKILL DETAILS (ALL MAPPED)
+  const [activeSkill, setActiveSkill] = useState(null);
+
+  // ✅ SKILL DETAILS WITH BOOKS & RESOURCES
   const skillDetails = {
     Creativity: {
       learn: ["Creative thinking", "Idea generation", "Innovation"],
       tools: ["Canva", "Figma"],
-      books: ["Creative Confidence"],
+      books: ["Creative Confidence – Tom Kelley", "Steal Like an Artist"],
+      resources: ["Coursera – Creative Thinking", "YouTube – The Futur"],
       path: "Explore → Create → Innovate",
     },
     "Visual Design": {
       learn: ["Color theory", "Typography", "UI basics"],
       tools: ["Figma", "Adobe XD"],
-      books: ["Don't Make Me Think"],
+      books: ["Don't Make Me Think", "Refactoring UI"],
+      resources: ["Google UX Course", "Behance"],
       path: "Design → UI → UX",
     },
     Imagination: {
-      learn: ["Visualization", "Storytelling"],
+      learn: ["Storytelling", "Visualization"],
       tools: ["Sketching"],
-      books: ["Steal Like an Artist"],
+      books: ["Steal Like an Artist", "Show Your Work"],
+      resources: ["Medium Design Blogs", "Pinterest"],
       path: "Imagine → Express → Create",
     },
     "Logical Thinking": {
       learn: ["Reasoning", "Algorithms"],
       tools: ["LeetCode"],
-      books: ["Introduction to Algorithms"],
+      books: ["Introduction to Algorithms", "Think Like a Programmer"],
+      resources: ["GeeksforGeeks", "HackerEarth"],
       path: "Basics → Practice → Advanced",
     },
     "Problem Solving": {
       learn: ["Problem breakdown", "Optimization"],
       tools: ["HackerRank"],
       books: ["Cracking the Coding Interview"],
+      resources: ["Codeforces", "LeetCode Discuss"],
       path: "Understand → Solve → Improve",
     },
     "Technical Skills": {
       learn: ["Programming", "Databases", "APIs"],
       tools: ["VS Code", "GitHub"],
-      books: ["Clean Code"],
+      books: ["Clean Code", "You Don’t Know JS"],
+      resources: ["freeCodeCamp", "MDN Docs"],
       path: "Learn → Build → Deploy",
     },
     Communication: {
       learn: ["Public speaking", "Clarity"],
       tools: ["PowerPoint"],
       books: ["Talk Like TED"],
+      resources: ["Toastmasters", "TED Talks"],
       path: "Speak → Present → Influence",
     },
     Empathy: {
       learn: ["Emotional intelligence", "Listening"],
       tools: ["Journaling"],
-      books: ["Emotional Intelligence – Goleman"],
+      books: ["Emotional Intelligence – Daniel Goleman"],
+      resources: ["MindTools", "Psychology Today"],
       path: "Listen → Understand → Support",
     },
     Leadership: {
       learn: ["Decision making", "Team leadership"],
       tools: ["Trello"],
       books: ["Leaders Eat Last"],
+      resources: ["Harvard Business Review"],
       path: "Self → Team → Organization",
     },
     Management: {
       learn: ["Planning", "Execution"],
       tools: ["Jira", "Asana"],
       books: ["The One Minute Manager"],
+      resources: ["Coursera – Project Management"],
       path: "Plan → Execute → Deliver",
     },
   };
 
-  // ✅ AFTER TEST → SHOW SKILLS
   return (
     <div
       style={{
         display: "grid",
         gridTemplateColumns: "1fr 1fr",
-        gap: "30px",
+        gap: "40px",
         padding: "40px",
         alignItems: "center",
       }}
     >
-      {/* LEFT IMAGE */}
-      <div>
+      {/* LEFT IMAGE (REDUCED SIZE ONLY) */}
+      <div style={{ textAlign: "center" }}>
         <img
-          src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-          alt="skills"
-          style={{ width: "100%", borderRadius: "16px" }}
+          src="/images/ana-bg1.png"
+          alt="Skill Analysis"
+          style={{
+            width: "70%",   // ✅ reduced from 100% → 80%
+            borderRadius: "18px",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+          }}
         />
       </div>
 
       {/* RIGHT CONTENT */}
       <div className="assessment-container">
         <h2>Skill Analysis</h2>
-        <p style={{ color: "#6b7280", marginBottom: "20px" }}>
-          Click a skill to view details.
+
+        <p style={{ marginTop: "10px", color: "#6b7280" }}>
+          Click on a skill to view learning details.
         </p>
 
-        {skills.map((skill, index) => (
-          <div
-            key={index}
-            style={{
-              border: "1px solid #e5e7eb",
-              borderRadius: "12px",
-              padding: "14px",
-              marginBottom: "12px",
-              background: "#fff",
-            }}
-          >
+        <div style={{ marginTop: "20px" }}>
+          {skills.map((skill, index) => (
             <div
-              onClick={() =>
-                setActiveSkill(activeSkill === skill ? null : skill)
-              }
+              key={index}
               style={{
-                cursor: "pointer",
-                fontWeight: "bold",
-                color: "#2563eb",
+                border: "1px solid #e5e7eb",
+                borderRadius: "14px",
+                marginBottom: "14px",
+                background: "#fff",
               }}
             >
-              {skill}
-            </div>
-
-            {activeSkill === skill && skillDetails[skill] && (
               <div
+                onClick={() =>
+                  setActiveSkill(activeSkill === skill ? null : skill)
+                }
                 style={{
-                  marginTop: "10px",
-                  background: "#f9fafb",
-                  padding: "12px",
-                  borderRadius: "10px",
+                  padding: "16px",
+                  cursor: "pointer",
+                  fontWeight: "bold",
+                  color: "#2563eb",
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
               >
-                <p><b>📘 Learn:</b> {skillDetails[skill].learn.join(", ")}</p>
-                <p><b>🛠 Tools:</b> {skillDetails[skill].tools.join(", ")}</p>
-                <p><b>📚 Books:</b> {skillDetails[skill].books.join(", ")}</p>
-                <p><b>🚀 Path:</b> {skillDetails[skill].path}</p>
+                <span>✔ {skill}</span>
+                <span>{activeSkill === skill ? "−" : "+"}</span>
               </div>
-            )}
-          </div>
-        ))}
+
+              {activeSkill === skill && skillDetails[skill] && (
+                <div
+                  style={{
+                    padding: "14px",
+                    background: "#f9fafb",
+                    borderTop: "1px solid #e5e7eb",
+                    borderRadius: "0 0 14px 14px",
+                    fontSize: "14px",
+                  }}
+                >
+                  <p><b>📘 Learn:</b> {skillDetails[skill].learn.join(", ")}</p>
+                  <p><b>🛠 Tools:</b> {skillDetails[skill].tools.join(", ")}</p>
+                  <p><b>📚 Books:</b> {skillDetails[skill].books.join(", ")}</p>
+                  <p><b>🎓 Resources:</b> {skillDetails[skill].resources.join(", ")}</p>
+                  <p><b>🚀 Path:</b> {skillDetails[skill].path}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
 
         <button
           className="next-btn"
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "30px" }}
           onClick={() => setPage("dashboard")}
         >
           Back to Dashboard

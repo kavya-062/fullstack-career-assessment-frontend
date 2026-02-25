@@ -1,59 +1,147 @@
-/* ===== Career Library Page ===== */
-.library-page {
-  padding: 20px;
+/* =====================================
+   RESULT PAGE – FULL SCREEN + BACKGROUND
+   ===================================== */
+
+/* Full screen background */
+.result-bg {
   height: 100vh;
-  overflow-y: auto;
-  background: #f4f6f8;
+  width: 100vw;
+
+  /* Result-oriented background image */
+  background-image: url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.library-page h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* 3 Columns Grid */
-.career-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-/* Card Styling */
-.career-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.career-card img {
+/* Dark overlay for focus */
+.result-overlay {
+  height: 100%;
   width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.career-card h4 {
-  margin: 10px 0 5px;
-  font-size: 16px;
+/* Result card (centered) */
+.result-card-full {
+  width: 480px;
+  max-width: 90%;
+  padding: 50px;
+
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  text-align: center;
+
+  box-shadow: 0 40px 80px rgba(0,0,0,0.35);
+  animation: popIn 0.9s ease;
 }
 
-.career-card p {
-  font-size: 13px;
-  color: #555;
+/* Card entrance animation */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-/* Back Button */
-.back-btn {
-  display: block;
-  margin: 30px auto;
-  padding: 8px 20px;
-  background: #4f46e5;
+/* Result title */
+.result-title {
+  font-size: 34px;
+  margin-bottom: 15px;
+}
+
+.result-title.success {
+  color: #4f46e5;
+}
+
+.result-title.error {
+  color: #dc2626;
+}
+
+/* Interest profile */
+.profile {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+.profile span {
+  color: #4f46e5;
+}
+
+/* Result message */
+.result-text {
+  margin-top: 12px;
+  font-size: 15px;
+  color: #374151;
+}
+
+/* Quote (base style) */
+.quote {
+  margin-top: 24px;
+  font-style: italic;
+  font-size: 15px;
+  color: #6366f1;
+  line-height: 1.4;
+}
+
+/* Button */
+.result-btn {
+  margin-top: 36px;
+  padding: 14px 38px;
+
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
   color: white;
+
   border: none;
-  border-radius: 6px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
+
+  box-shadow: 0 15px 30px rgba(79,70,229,0.45);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result-btn:hover {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 22px 45px rgba(79,70,229,0.6);
+}
+
+/* =====================================
+   🔥 SUDDEN QUOTE APPEAR ANIMATION (ADDED)
+   ===================================== */
+
+/* Quote hidden initially */
+.reveal-quote {
+  opacity: 0;
+  transform: scale(0.8) translateY(20px);
+  animation: quoteReveal 0.9s ease forwards;
+  animation-delay: 1.5s; /* ⏱️ appears suddenly after delay */
+}
+
+/* Reveal animation */
+@keyframes quoteReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+    filter: blur(5px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) translateY(-6px);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }

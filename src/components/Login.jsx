@@ -61,7 +61,7 @@ export default function Login({ setPage, setRole }) {
         </p>
       </div>
 
-      {/* ✅ LOGIN PAGE IMAGE (PREVIOUS IMAGE ONLY) */}
+      {/* LOGIN PAGE IMAGE */}
       <div className="login-image">
         <img src="/images/careers-bg.png" alt="Careers" />
       </div>

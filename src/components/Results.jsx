@@ -1,5 +1,7 @@
+import React from "react";
+
 export default function Results({ setPage, interest }) {
-  // Calculate total answers
+  // ===== TOTAL ANSWERS =====
   const totalAnswers = Object.values(interest).reduce(
     (sum, value) => sum + value,
     0
@@ -7,115 +9,115 @@ export default function Results({ setPage, interest }) {
 
   // ❌ IF NO QUESTIONS ANSWERED
   if (totalAnswers === 0) {
-    // 🚫 CLEAR ANY PREVIOUS DATA
     localStorage.removeItem("assessmentStatus");
     localStorage.removeItem("recommendedCareers");
     localStorage.removeItem("skillAnalysis");
-    localStorage.removeItem("assessmentUnlocked"); // ✅ ADDITION
+    localStorage.removeItem("assessmentUnlocked");
 
     return (
-      <div className="assessment-container">
-        <h2>Results</h2>
+      <div className="result-bg">
+        <div className="result-overlay">
+          <div className="result-card-full pop-in">
+            <h1 className="result-title error">🚫 Result Not Found</h1>
 
-        <p style={{ marginTop: "20px", fontWeight: "bold", color: "#dc2626" }}>
-          Result not found
-        </p>
+            <p className="result-text">
+              You didn’t answer any questions.
+            </p>
 
-        <p style={{ marginTop: "10px", color: "#6b7280" }}>
-          You did not answer any questions. Please take the assessment to get
-          personalized career recommendations.
-        </p>
+            <p className="quote reveal-quote">
+              “Your career journey begins when you decide to explore.”
+            </p>
 
-        <button
-          className="next-btn"
-          style={{ marginTop: "30px" }}
-          onClick={() => setPage("dashboard")}
-        >
-          Back to Dashboard
-        </button>
+            <button
+              className="result-btn"
+              onClick={() => setPage("dashboard")}
+            >
+              Start Assessment 🚀
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // Determine highest interest
+  // ===== FIND TOP INTERESTS =====
   const maxScore = Math.max(...Object.values(interest));
   const topInterests = Object.keys(interest).filter(
     (key) => interest[key] === maxScore
   );
 
+  // ===== RESULT + SKILL MAPPING (FIXED) =====
   let profile = "Balanced / Mixed Interests";
-  let message = "Explore multiple career domains.";
-  let careers = [];
+  let message = "You have interests in multiple domains.";
   let skills = [];
 
-  if (topInterests.length === 1) {
-    switch (topInterests[0]) {
+  topInterests.forEach((type) => {
+    switch (type) {
       case "R":
         profile = "Technical / Realistic";
-        message = "Careers like Software Engineer, Data Analyst suit you.";
-        careers = ["Software Engineer", "Data Analyst", "Mechanical Engineer"];
-        skills = ["Logical Thinking", "Problem Solving", "Technical Skills"];
+        message = "Careers like Software Engineer suit you.";
+        skills.push("Logical Thinking", "Problem Solving", "Technical Skills");
         break;
 
       case "A":
         profile = "Creative / Artistic";
         message = "Careers like Designer, Content Creator suit you.";
-        careers = ["UI/UX Designer", "Graphic Designer", "Content Writer"];
-        skills = ["Creativity", "Visual Design", "Imagination"];
+        skills.push("Creativity", "Visual Design", "Imagination");
         break;
 
       case "S":
         profile = "Social / Helping";
         message = "Careers like Teacher, Counselor suit you.";
-        careers = ["Teacher", "Psychologist", "Counselor"];
-        skills = ["Communication", "Empathy", "Listening"];
+        skills.push("Communication", "Empathy", "Listening");
         break;
 
       case "E":
         profile = "Leadership / Enterprising";
         message = "Careers like Manager, Entrepreneur suit you.";
-        careers = ["Entrepreneur", "Business Analyst", "Manager"];
-        skills = ["Leadership", "Decision Making", "Risk Taking"];
+        skills.push("Leadership", "Decision Making", "Management");
         break;
 
       default:
         break;
     }
-  }
+  });
 
-  // ✅ SAVE ONLY WHEN ANSWERS EXIST (NO CHANGE)
+  // ✅ REMOVE DUPLICATE SKILLS
+  skills = [...new Set(skills)];
+
+  // ✅ SAVE RESULT FOR SKILL ANALYSIS
   localStorage.setItem("assessmentStatus", "completed");
-  localStorage.setItem("recommendedCareers", JSON.stringify(careers));
   localStorage.setItem("skillAnalysis", JSON.stringify(skills));
-  localStorage.setItem("interestProfile", profile);
-  localStorage.setItem("assessmentDate", new Date().toLocaleDateString());
-  localStorage.setItem(
-    "assessmentAttempts",
-    Number(localStorage.getItem("assessmentAttempts") || 0) + 1
-  );
-
-  // 🔓 THIS IS THE ONLY IMPORTANT ADDITION
   localStorage.setItem("assessmentUnlocked", "true");
 
+  // ===== UI =====
   return (
-    <div className="assessment-container">
-      <h2>Results</h2>
+    <div className="result-bg">
+      <div className="result-overlay">
+        <div className="result-card-full pop-in">
+          <h1 className="result-title success">🎉 HURRAYYYYY!</h1>
 
-      <p style={{ marginTop: "20px", fontWeight: "bold" }}>
-        Interest Profile: {profile}
-      </p>
+          <p className="profile">
+            🌟 Interest Profile:
+            <span> {profile}</span>
+          </p>
 
-      <p style={{ marginTop: "10px", color: "#6b7280" }}>
-        {message}
-      </p>
+          <p className="result-text">{message}</p>
 
-      <button
-        className="next-btn"
-        style={{ marginTop: "30px" }}
-        onClick={() => setPage("dashboard")}
-      >
-        Back
-      </button>
+          <p className="quote reveal-quote">
+            “Hey! You just discovered your destination.
+            <br />
+            Now it’s time to build the path.”
+          </p>
+
+          <button
+            className="result-btn"
+            onClick={() => setPage("dashboard")}
+          >
+            Go to Dashboard 🚀
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
