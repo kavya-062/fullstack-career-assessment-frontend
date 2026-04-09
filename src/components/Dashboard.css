@@ -1,5 +1,68 @@
+/* ===== SMALL PROFESSIONAL HEADER ===== */
+
+.top-header{
+  width:100%;
+  height:55px;
+  background: linear-gradient(90deg,#C9A227,#A67C00);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-weight:600;
+}
+
+/* website name in center */
+
+.web-name{
+  font-size:20px;
+  letter-spacing:1px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* cap image */
+
+.cap-logo{
+  width:26px;
+  height:26px;
+  margin-right:8px;
+}
+
+/* right side buttons */
+
+.nav-right{
+  position:absolute;
+  right:30px;
+  display:flex;
+  gap:20px;
+}
+
+/* navigation buttons */
+
+.nav-right button{
+  background:none;
+  border:none;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+/* hover effect */
+
+.nav-right button:hover{
+  color:#38bdf8;
+}
+
+
+
+/* ===== DASHBOARD PAGE ===== */
+
 .dashboard-page {
-  height: 100vh;
+  min-height: 100vh;
   background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f");
   background-size: cover;
   background-position: center;
@@ -7,17 +70,21 @@
 }
 
 .dashboard-overlay {
-  height: 100%;
+  min-height: calc(100vh - 55px);
   background: rgba(0, 0, 0, 0.55);
   color: white;
-  padding: 40px;
+  padding: 30px 40px 40px 40px;
   text-align: center;
 }
+
+/* title */
 
 .dashboard-title {
   font-size: 36px;
   margin-bottom: 10px;
 }
+
+/* subtitle */
 
 .dashboard-subtitle {
   font-size: 16px;
@@ -25,7 +92,8 @@
   opacity: 0.9;
 }
 
-/* ===== REAL-TIME STATUS & RECOMMENDATIONS ===== */
+/* assessment status */
+
 .dashboard-info {
   margin-bottom: 35px;
 }
@@ -43,6 +111,8 @@
 .status.pending {
   color: #fde68a;
 }
+
+/* recommended careers box */
 
 .recommend-box {
   background: rgba(255, 255, 255, 0.18);
@@ -68,7 +138,8 @@
   margin: 4px 0;
 }
 
-/* ===== DASHBOARD CARDS ===== */
+/* cards layout */
+
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -76,6 +147,8 @@
   max-width: 900px;
   margin: auto;
 }
+
+/* card */
 
 .dash-card {
   background: white;
@@ -91,19 +164,27 @@
   margin-bottom: 15px;
 }
 
+/* headings */
+
 .dash-card h3 {
   margin-bottom: 8px;
 }
+
+/* description */
 
 .dash-card p {
   font-size: 14px;
   color: #555;
 }
 
+/* hover animation */
+
 .dash-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
 }
+
+/* logout card */
 
 .logout {
   background: #ffe5e5;

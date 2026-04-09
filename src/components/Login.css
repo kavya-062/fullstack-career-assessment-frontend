@@ -1,196 +1,285 @@
-/* PAGE CONTAINER */
-.login-page {
-  min-height: 100vh;
-  background: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
+/* PAGE */
+.login-page{
+  min-height:100vh;
+  background:white;
 
-  /* page transition */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+
   animation: pageFadeIn 0.5s ease-in-out;
 }
 
-/* LOGIN CARD */
-.login-card {
-  margin-top: 40px;
-  background: white;
-  width: 360px;
-  padding: 35px;
-  border-radius: 16px;
-  text-align: center;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
-  z-index: 2;
 
-  /* card animation */
-  animation: fadeSlideUp 0.8s ease-out;
+/* CARD */
+.login-card{
+
+  margin-top:40px;
+
+  background:rgb(219,157,157);
+
+  width:360px;
+
+  padding:35px;
+
+  border-radius:16px;
+
+  text-align:center;
+
+  box-shadow:0 12px 30px rgba(0,0,0,0.18);
+
+  animation:fadeSlideUp 0.8s ease-out;
+
 }
 
-.login-card h1 {
-  margin-bottom: 8px;
-  color: #111827;
+.login-card h1{
+  margin-bottom:8px;
 }
 
-.login-card p {
-  color: #6b7280;
-  margin-bottom: 20px;
+.login-card p{
+  margin-bottom:20px;
 }
 
-/* INPUTS */
-.login-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  font-size: 15px;
 
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+/* INPUT */
+
+.login-input{
+
+  width:100%;
+
+  padding:12px;
+
+  margin-bottom:15px;
+
+  border-radius:8px;
+
+  border:1px solid #ccc;
+
 }
 
-.login-input:focus {
-  outline: none;
-  border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+
+/* BUTTON */
+
+.login-btn{
+
+  width:100%;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  margin-bottom:10px;
+
 }
 
-/* BUTTONS */
-.login-btn {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 12px;
+.student{
 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background:#4f46e5;
+
+  color:white;
+
 }
 
-.login-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+.admin{
+
+  background:#9aacd0;
+
 }
 
-.login-btn.student {
-  background: #4f46e5;
-  color: white;
+
+/* SIGNUP TEXT */
+
+.signup-text{
+
+  margin-top:10px;
+
 }
 
-.login-btn.student:hover {
-  background: #4338ca;
+.signup-text span{
+
+  color:#4f46e5;
+
+  cursor:pointer;
+
 }
 
-.login-btn.admin {
-  background: #e5e7eb;
-  color: #111827;
+
+/* LOGIN IMAGE */
+
+.login-image{
+
+  width:100%;
+
+  height:45vh;
+
+  overflow:hidden;
+
 }
 
-.login-btn.admin:hover {
-  background: #d1d5db;
+.login-image img{
+
+  width:100%;
+  height:100%;
+
+  object-fit:cover;
+
 }
 
-/* SIGN UP TEXT */
-.signup-text {
-  margin-top: 12px;
-  font-size: 14px;
-  color: #6b7280;
+
+/* SIGNUP PAGE */
+
+.signup-container{
+
+  min-height:100vh;
+
+  display:flex;
+
 }
 
-.signup-text span {
-  color: #4f46e5;
-  cursor: pointer;
-  font-weight: 600;
+.signup-image{
+
+  width:50%;
+
 }
 
-.signup-text span:hover {
-  text-decoration: underline;
+.signup-image img{
+
+  width:100%;
+  height:100vh;
+
+  object-fit:cover;
+
 }
 
-/* FULL-WIDTH IMAGE SECTION (LOGIN) */
-.login-image {
-  width: 100%;
-  height: 45vh;
-  overflow: hidden;
+.signup-form{
+
+  width:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#cbc5c5;
+
 }
 
-.login-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 
-  animation: fadeInImage 1.2s ease-in;
+/* FIRST + LAST NAME */
+
+.name-row{
+
+  display:flex;
+
+  gap:10px;
+
 }
 
-/* ============================== */
-/* SIGNUP PAGE (SIDE BY SIDE ONLY) */
-/* ============================== */
 
-.signup-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: row;
+/* OR */
 
-  /* page transition */
-  animation: pageFadeIn 0.5s ease-in-out;
+.divider{
+
+  margin:15px 0;
+
+  text-align:center;
+
+  position:relative;
+
 }
 
-/* LEFT IMAGE */
-.signup-image {
-  width: 50%;
-  height: 100vh;
-  overflow: hidden;
+.divider span{
+
+  background:rgb(219,157,157);
+
+  padding:0 10px;
+
 }
 
-.signup-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.divider:before{
 
-  animation: fadeInImage 1.2s ease-in;
+  content:"";
+
+  position:absolute;
+
+  width:100%;
+
+  height:1px;
+
+  background:#ddd;
+
+  left:0;
+
+  top:50%;
+
+  z-index:-1;
+
 }
 
-/* RIGHT FORM */
-.signup-form {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
+
+/* GOOGLE */
+
+.google-btn{
+
+  width:100%;
+
+  padding:10px;
+
+  border-radius:8px;
+
+  border:1px solid #ccc;
+
+  background:white;
+
+  cursor:pointer;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:10px;
+
 }
 
-/* ============================== */
-/* ANIMATION KEYFRAMES */
-/* ============================== */
+.google-btn img{
 
-@keyframes fadeSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(25px);
+  width:20px;
+
+}
+
+
+/* ANIMATION */
+
+@keyframes fadeSlideUp{
+
+  from{
+    opacity:0;
+    transform:translateY(20px);
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  to{
+    opacity:1;
+    transform:translateY(0);
   }
+
 }
 
-@keyframes fadeInImage {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
+@keyframes pageFadeIn{
 
-/* PAGE TRANSITION */
-@keyframes pageFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  from{
+    opacity:0;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  to{
+    opacity:1;
   }
+
 }

@@ -29,41 +29,81 @@ const options = [
 ];
 
 export default function CareerTest({ setPage, addInterest }) {
+
   const [answers, setAnswers] = useState({});
 
+
   const next = () => {
+
+    // ADDED LINE (prevents duplicate result saving)
+    localStorage.removeItem("resultSaved");
+
     questions.forEach((q, i) => {
+
       addInterest(q.type, answers[i] || 0);
+
     });
+
     setPage("personalityTest");
+
   };
 
+
   return (
+
     <div className="test-page">
+
       <h2>Career Interest Assessment</h2>
 
+
       {questions.map((q, i) => (
+
         <div key={i} className="question-card">
+
           <p>{i + 1}. {q.text}</p>
 
+
           {options.map(o => (
+
             <label
+
               key={o.score}
+
               className={`option-box ${answers[i] === o.score ? "selected" : ""}`}
+
             >
+
               <input
+
                 type="radio"
+
                 name={`c${i}`}
+
                 checked={answers[i] === o.score}
+
                 onChange={() => setAnswers({ ...answers, [i]: o.score })}
+
               />
+
               {o.label}
+
             </label>
+
           ))}
+
         </div>
+
       ))}
 
-      <button className="next-btn" onClick={next}>Next</button>
+
+      <button className="next-btn" onClick={next}>
+
+        Next
+
+      </button>
+
     </div>
+
   );
+
 }

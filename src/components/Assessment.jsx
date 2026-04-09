@@ -20,70 +20,190 @@ const questions = [
 ];
 
 export default function Assessment({ setPage, addInterest }) {
+
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
 
   const map = ["R", "A", "S", "E"];
 
-  // 🔒 LOCK SKILLS WHEN TEST STARTS
-  useEffect(() => {
+  useEffect(()=>{
     localStorage.removeItem("assessmentUnlocked");
     localStorage.removeItem("skillAnalysis");
-  }, []);
+  },[]);
 
-  const handleSelect = (index) => {
+  const handleSelect = (index)=>{
     setSelected(index);
-    addInterest(map[index], 1);
+    addInterest(map[index],1);
   };
 
-  const handleNext = () => {
+  const submitToBackend = async ()=>{
+    try{
+      await fetch("http://localhost:8086/api/assessment",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          completed:true,
+          totalQuestions:questions.length
+        })
+      });
+    }
+    catch(error){
+      console.error("Backend connection failed",error);
+    }
+  };
+
+  const handleNext = async ()=>{
     setSelected(null);
 
-    if (current < questions.length - 1) {
-      setCurrent(current + 1);
-    } else {
-      // 🔓 UNLOCK ONLY AFTER FINAL SUBMIT
-      localStorage.setItem("assessmentUnlocked", "true");
+    if(current < questions.length-1){
+      setCurrent(current+1);
+    }
+    else{
+      localStorage.setItem("assessmentUnlocked","true");
+      await submitToBackend();
       setPage("results");
     }
   };
 
-  return (
-    <div className="assessment-container">
-      <div className="header">
-        <span className="icon">🧠</span>
-        <h2>Career Assessment</h2>
-      </div>
+  return(
 
-      <p className="progress">
-        Question {current + 1} of {questions.length}
-      </p>
+    <>
 
-      <div className="question-card">
-        <p className="question-text">{questions[current].q}</p>
+      {/* SAME GOLD HEADER */}
+      <div className="top-header">
 
-        <div className="options-container">
-          {questions[current].o.map((opt, i) => (
-            <button
-              key={i}
-              className={`option-btn ${selected === i ? "selected" : ""}`}
-              onClick={() => handleSelect(i)}
-            >
-              {opt}
-            </button>
-          ))}
+        <div className="nav-right">
+
+          <button onClick={()=>setPage("home")}>
+            Home
+          </button>
+
+          <button onClick={()=>setPage("home")}>
+            About
+          </button>
+
         </div>
+
+        <div className="web-name">
+          Career-Assessment
+        </div>
+
       </div>
 
-      <div className="nav-buttons">
-        <button className="skip-btn" onClick={handleNext}>
-          Skip
-        </button>
 
-        <button className="next-btn" onClick={handleNext}>
-          {current === questions.length - 1 ? "Submit Test" : "Next"}
-        </button>
+      <div className="assessment-page">
+
+        <div className="assessment-container">
+
+          <div className="header">
+
+            <span className="icon">🧠</span>
+
+            <h2>Career Assessment</h2>
+
+          </div>
+
+
+          <p className="progress-text">
+
+            Question {current+1} of {questions.length}
+
+          </p>
+
+
+          <div className="step-indicator">
+
+            {questions.map((_,i)=>(
+
+              <div
+                key={i}
+                className={`step ${i<=current ? "active" : ""}`}
+              />
+
+            ))}
+
+          </div>
+
+
+          <div className="progress-bar">
+
+            <div
+              className="progress-fill"
+              style={{
+                width:`${((current+1)/questions.length)*100}%`
+              }}
+            />
+
+          </div>
+
+
+          <div className="question-card">
+
+            <p className="question-text">
+
+              {questions[current].q}
+
+            </p>
+
+
+            <div className="options-container">
+
+              {questions[current].o.map((opt,i)=>(
+
+                <button
+                  key={i}
+
+                  className={`option-btn ${
+                    selected===i ? "selected" : ""
+                  }`}
+
+                  onClick={()=>handleSelect(i)}
+                >
+
+                  {opt}
+
+                </button>
+
+              ))}
+
+            </div>
+
+          </div>
+
+
+          <div className="nav-buttons">
+
+            <button
+              className="skip-btn"
+              onClick={handleNext}
+            >
+
+              Skip
+
+            </button>
+
+
+            <button
+              className="next-btn"
+              onClick={handleNext}
+            >
+
+              {current===questions.length-1
+                ? "Submit Test"
+                : "Next"}
+
+            </button>
+
+          </div>
+
+        </div>
+
       </div>
-    </div>
+
+    </>
+
   );
+
 }

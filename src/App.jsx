@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 import Login from "./components/Login";
@@ -17,13 +17,17 @@ import ManageQuestions from "./components/admin/ManageQuestions";
 import CareerRecommendations from "./components/admin/CareerRecommendations";
 import AdminAnalytics from "./components/admin/AdminAnalytics";
 
-// ✅ Home import (already added)
+// Home
 import Home from "./components/Home";
 
 export default function App() {
-  // 🔴 ONLY CHANGE MADE HERE (login → home)
   const [page, setPage] = useState("home");
-  const [role, setRole] = useState(null);
+
+
+
+  const [role, setRole] = useState(
+    localStorage.getItem("role") || null
+  );
 
   const [interest, setInterest] = useState({
     R: 0,
@@ -41,20 +45,27 @@ export default function App() {
     }));
   };
 
+  useEffect(() => {
+    localStorage.setItem("page", page);
+  }, [page]);
+
+  useEffect(() => {
+    if(role){
+      localStorage.setItem("role", role);
+    }
+  }, [role]);
+
   return (
     <>
-      {/* HOME / ABOUT US */}
+
       {page === "home" && <Home setPage={setPage} />}
 
-      {/* LOGIN */}
       {page === "login" && (
         <Login setPage={setPage} setRole={setRole} />
       )}
 
-      {/* SIGNUP */}
       {page === "signup" && <Signup setPage={setPage} />}
 
-      {/* STUDENT FLOW */}
       {role === "student" && page === "dashboard" && (
         <Dashboard setPage={setPage} />
       )}
@@ -79,7 +90,6 @@ export default function App() {
         <AssessmentHistory setPage={setPage} />
       )}
 
-      {/* ADMIN FLOW */}
       {role === "admin" && page === "admin" && (
         <AdminDashboard setPage={setPage} />
       )}
@@ -95,6 +105,10 @@ export default function App() {
       {role === "admin" && page === "admin-analytics" && (
         <AdminAnalytics setPage={setPage} />
       )}
+
+      {/* fallback UI */}
+      {!page && <h2>Loading...</h2>}
+
     </>
   );
 }

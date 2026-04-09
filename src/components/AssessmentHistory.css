@@ -1,0 +1,156 @@
+/* TOP HEADER */
+
+.top-header{
+
+  width:100%;
+
+  height:55px;
+
+  background:
+  linear-gradient(90deg,#C9A227,#A67C00);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:white;
+
+  font-weight:600;
+
+  font-size:18px;
+
+}
+
+
+/* PAGE */
+
+.history-page{
+
+  min-height:calc(100vh - 55px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  background:#faf9f6;
+
+  font-family:"Segoe UI",sans-serif;
+
+}
+
+
+/* CARD */
+
+.history-card{
+
+  width:420px;
+
+  background:white;
+
+  padding:40px;
+
+  border-radius:16px;
+
+  box-shadow:
+  0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+
+/* TITLE WITH BACKGROUND */
+
+.history-title{
+
+  text-align:center;
+
+  background:
+  linear-gradient(90deg,#C9A227,#A67C00);
+
+  color:white;
+
+  padding:10px;
+
+  border-radius:8px;
+
+  margin-bottom:25px;
+
+}
+
+
+/* ROW */
+
+.history-row{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+  margin-bottom:18px;
+
+  padding:12px;
+
+  border-radius:10px;
+
+  background:#f9fafb;
+
+}
+
+
+/* EMOJI */
+
+.emoji{
+
+  font-size:22px;
+
+}
+
+
+/* TEXT */
+
+.history-row p{
+
+  margin:0;
+
+  color:#6b7280;
+
+}
+
+
+/* BUTTON */
+
+.history-btn{
+
+  width:100%;
+
+  margin-top:20px;
+
+  background:
+  linear-gradient(90deg,#C9A227,#A67C00);
+
+  color:white;
+
+  border:none;
+
+  padding:12px;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  font-size:15px;
+
+}
+
+
+.history-btn:hover{
+
+  background:
+  linear-gradient(90deg,#b8961f,#8f6900);
+
+}
