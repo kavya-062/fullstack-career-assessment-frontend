@@ -142,76 +142,61 @@ export default function Login({ setPage, setRole }) {
 
 
   return (
-
-    <div className="login-page">
-
-      <div className="login-card">
-
-        <h1>Career Assessment Tool</h1>
-
-        <p>Discover your future career path</p>
-
-
-        <input
-          type="text"
-          placeholder="Username (Email)"
-          className="login-input"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="login-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-
-        <button
-          className="login-btn student"
-          onClick={loginAsStudent}
-        >
-          Login as Student
-        </button>
-
-
-        <button
-          className="login-btn admin"
-          onClick={loginAsAdmin}
-        >
-          Login as Admin
-        </button>
-
-
-        <p className="signup-text">
-
-          Don’t have an account?{" "}
-
-          <span onClick={() => setPage("signup")}>
-
-            Sign up
-
-          </span>
-
-        </p>
-
-      </div>
-
-
-      <div className="login-image">
-
+    <div className="auth-container">
+      <div className="auth-image">
         <img
           src="/images/careers-bg.png"
-          alt="Careers"
+          alt="Careers Illustration"
         />
-
       </div>
+      
+      <div className="auth-form-wrapper">
+        <div className="auth-card">
+          <h1>Welcome Back</h1>
+          <p>Login to your account to continue</p>
 
+          <div className="auth-input-group">
+            <input
+              type="text"
+              placeholder="Username (Email)"
+              className="auth-input"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+
+          <div className="auth-input-group">
+            <input
+              type="password"
+              placeholder="Password"
+              className="auth-input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+
+          <button
+            className="auth-btn student"
+            onClick={loginAsStudent}
+          >
+            Login as Student
+          </button>
+
+          <button
+            className="auth-btn admin"
+            onClick={loginAsAdmin}
+          >
+            Login as Admin
+          </button>
+
+          <p className="auth-footer-text">
+            Don’t have an account?{" "}
+            <span onClick={() => setPage("signup")}>
+              Sign up
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
-
   );
-
 }

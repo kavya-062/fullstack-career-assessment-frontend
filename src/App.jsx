@@ -55,6 +55,35 @@ export default function App() {
     }
   }, [role]);
 
+  // Session timeout logic
+  useEffect(() => {
+    if (!role) return;
+
+    let timeout;
+    const INACTIVITY_LIMIT = 2 * 60 * 1000; // 2 minutes
+
+    const resetTimeout = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        localStorage.removeItem("role");
+        localStorage.removeItem("page");
+        setRole(null);
+        setPage("login");
+        alert("Session expired due to inactivity. Please log in again.");
+      }, INACTIVITY_LIMIT);
+    };
+
+    resetTimeout();
+
+    const events = ["mousemove", "keydown", "mousedown", "scroll", "touchstart"];
+    events.forEach(event => window.addEventListener(event, resetTimeout));
+
+    return () => {
+      clearTimeout(timeout);
+      events.forEach(event => window.removeEventListener(event, resetTimeout));
+    };
+  }, [role]);
+
   return (
     <>
 

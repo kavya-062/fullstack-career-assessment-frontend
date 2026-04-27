@@ -4,34 +4,87 @@
   overflow-x: hidden;
 }
 
+/* ================= NAVBAR ================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-logo {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.nav-logo span {
+  color: var(--accent-color);
+}
+
+.nav-login-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-login-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
 /* ================= HERO BACKGROUND IMAGE ================= */
 .hero-bg {
   height: 100vh;
-  background-image: url("/images/home-bg.png");
+  background-image: url("/images/home-bg.png"); /* Removed the dark overlay to show your custom image perfectly */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  position: relative;
 }
 
-/* ================= LOGIN BUTTON (TOP RIGHT) ================= */
-.login-fixed-btn {
-  position: fixed;
-  top: 25px;
-  right: 40px;
-  padding: 10px 28px;
-  border-radius: 30px;
+.hero-cta-btn {
+  position: absolute;
+  top: 60%;
+  left: 10%; /* Aligns it underneath the built-in text */
+  padding: 16px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 8px;
   border: none;
-  background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
-  font-size: 15px;
+  background: var(--primary-color);
+  color: white;
   cursor: pointer;
-  backdrop-filter: blur(6px);
-  z-index: 1000;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+  animation: fadeSlideUp 0.8s ease-out;
 }
 
-.login-fixed-btn:hover {
-  background: #ffffff;
-  color: #0b2c33;
+.hero-cta-btn:hover {
+  background: var(--primary-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 25px rgba(79, 70, 229, 0.4);
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ================= ABOUT SECTION ================= */
@@ -143,4 +196,29 @@
 /* ================= SMOOTH SCROLL ================= */
 html {
   scroll-behavior: smooth;
+}
+
+/* ================= MOBILE RESPONSIVENESS ================= */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+  .nav-logo {
+    font-size: 20px;
+  }
+  .hero-content h1 {
+    font-size: 36px;
+  }
+  .hero-content p {
+    font-size: 16px;
+  }
+  .about-section {
+    padding: 60px 20px;
+  }
+  .about-section h2 {
+    font-size: 28px;
+  }
+  .features-grid, .roles-grid {
+    grid-template-columns: 1fr;
+  }
 }

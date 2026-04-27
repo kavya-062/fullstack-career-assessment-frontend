@@ -4,16 +4,20 @@ export default function Home({ setPage }) {
   return (
     <div className="home-wrapper">
 
-      {/* LOGIN BUTTON */}
-      <button
-        className="login-fixed-btn"
-        onClick={() => setPage("login")}
-      >
-        Login
-      </button>
+      {/* NAVBAR */}
+      <nav className="navbar">
+        <div className="nav-logo" onClick={() => setPage("home")}>
+          Career<span>Path</span>
+        </div>
+        <div className="nav-links">
+          <button className="nav-login-btn" onClick={() => setPage("login")}>Login / Sign Up</button>
+        </div>
+      </nav>
 
-      {/* HERO BACKGROUND IMAGE */}
-      <div className="hero-bg"></div>
+      {/* HERO SECTION */}
+      <div className="hero-bg">
+        <button className="hero-cta-btn" onClick={() => setPage("signup")}>Get Started Today</button>
+      </div>
 
       {/* ABOUT US SECTION */}
       <div className="about-section">
