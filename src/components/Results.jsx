@@ -161,7 +161,7 @@ export default function Results({ setPage, interest }) {
 
       try {
 
-        await fetch("http://localhost:8086/api/results/results", {
+        await fetch("http://localhost:8080/api/results/results", {
 
           method: "POST",
 

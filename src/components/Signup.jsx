@@ -46,7 +46,7 @@ export default function Signup({ setPage }) {
     
     // Call backend to request real OTP
     try {
-      const res = await fetch("http://localhost:8086/student/request-otp", {
+      const res = await fetch("http://localhost:8080/student/request-otp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -73,7 +73,7 @@ export default function Signup({ setPage }) {
     }
 
     try {
-      const res = await fetch("http://localhost:8086/student/save", {
+      const res = await fetch("http://localhost:8080/student/save", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
