@@ -16,7 +16,6 @@ export default function Signup({ setPage }) {
 
   const BASE_URL = "https://fullstack-career-assessment-backend-production.up.railway.app";
 
-
   // =============================
   // PASSWORD STRENGTH
   // =============================
@@ -27,13 +26,12 @@ export default function Signup({ setPage }) {
     else setPasswordStrength("strong");
   };
 
-
   // =============================
-  // REQUEST OTP (FIXED)
+  // REQUEST OTP (FIXED ONLY)
   // =============================
   const handleSignupClick = async () => {
 
-    console.log("🔥 Signup button clicked"); // DEBUG
+    console.log("🔥 Signup clicked");
 
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       alert("Please fill all fields");
@@ -68,28 +66,27 @@ export default function Signup({ setPage }) {
       console.log("Response:", data);
 
       if (res.ok) {
-        alert("OTP sent successfully!");
+        alert("OTP sent to your email!");
         setShowOTP(true);
       } else {
         alert("Failed to send OTP");
       }
 
     } catch (error) {
-      console.error("❌ ERROR:", error);
+      console.error("❌ Backend error:", error);
       alert("Backend connection failed");
     }
   };
 
-
   // =============================
-  // VERIFY OTP
+  // VERIFY OTP + SAVE USER
   // =============================
   const handleVerifyOTP = async () => {
 
     const enteredOTP = otpInputs.join("");
 
     if (enteredOTP.length !== 6) {
-      alert("Enter valid 6 digit OTP");
+      alert("Please enter a valid 6-digit code.");
       return;
     }
 
@@ -111,24 +108,24 @@ export default function Signup({ setPage }) {
         })
       });
 
-      console.log("Verify Status:", res.status);
+      console.log("Verify status:", res.status);
 
       if(res.ok){
         alert("Account created successfully!");
         setShowOTP(false);
         setPage("login");
       } else {
-        alert("Invalid OTP");
+        const errorData = await res.json().catch(() => ({}));
+        alert(errorData.message || "Invalid OTP or Signup failed");
       }
 
     } catch(error) {
       console.error(error);
-      alert("Backend error");
+      alert("Backend connection failed");
     }
   };
 
-
-  // OTP input handling
+  // OTP input handling (UNCHANGED)
   const handleOtpChange = (index, value) => {
     if (isNaN(value)) return;
 
@@ -137,11 +134,10 @@ export default function Signup({ setPage }) {
     setOtpInputs(newOtp);
 
     if (value && index < 5) {
-      const next = document.getElementById(`otp-${index + 1}`);
-      if (next) next.focus();
+      const nextInput = document.getElementById(`otp-${index + 1}`);
+      if (nextInput) nextInput.focus();
     }
   };
-
 
   return (
     <div className="auth-container signup-override">
@@ -149,7 +145,7 @@ export default function Signup({ setPage }) {
       <div className="auth-image">
         <img
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
-          alt="Students"
+          alt="Students Collaborating"
         />
       </div>
 
@@ -157,51 +153,127 @@ export default function Signup({ setPage }) {
         <div className="auth-card">
 
           <h1>Create Account</h1>
+          <p>Start your career journey</p>
 
-          <input placeholder="First Name" value={firstName} onChange={(e)=>setFirstName(e.target.value)} />
-          <input placeholder="Last Name" value={lastName} onChange={(e)=>setLastName(e.target.value)} />
-          <input placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+          <div className="auth-name-row">
+            <div className="auth-input-group">
+              <input
+                type="text"
+                placeholder="First Name"
+                className="auth-input"
+                value={firstName}
+                onChange={(e)=>setFirstName(e.target.value)}
+              />
+            </div>
 
-          <input type="password" placeholder="Password"
-            value={password}
-            onChange={(e)=>{
-              setPassword(e.target.value);
-              checkStrength(e.target.value);
-            }}
-          />
+            <div className="auth-input-group">
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="auth-input"
+                value={lastName}
+                onChange={(e)=>setLastName(e.target.value)}
+              />
+            </div>
+          </div>
 
-          <input type="password" placeholder="Confirm Password"
-            value={confirmPassword}
-            onChange={(e)=>setConfirmPassword(e.target.value)}
-          />
+          <div className="auth-input-group">
+            <input
+              type="email"
+              placeholder="Email"
+              className="auth-input"
+              value={email}
+              onChange={(e)=>setEmail(e.target.value)}
+            />
+          </div>
 
-          <button onClick={handleSignupClick}>
+          <div className="auth-input-group">
+            <input
+              type="password"
+              placeholder="Password"
+              className="auth-input"
+              value={password}
+              onChange={(e)=>{
+                setPassword(e.target.value);
+                checkStrength(e.target.value);
+              }}
+            />
+          </div>
+
+          {password && (
+            <div className="password-strength-container">
+              <div className={`password-strength-fill strength-${passwordStrength}`}></div>
+            </div>
+          )}
+
+          <div className="auth-input-group">
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="auth-input"
+              value={confirmPassword}
+              onChange={(e)=>setConfirmPassword(e.target.value)}
+            />
+          </div>
+
+          <button
+            className="auth-btn student"
+            onClick={handleSignupClick}
+          >
             Sign Up
           </button>
+
+          <div className="auth-divider">
+            <span>OR</span>
+          </div>
+
+          <button className="auth-google-btn">
+            <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="google" />
+            Continue with Google
+          </button>
+
+          <p className="auth-footer-text">
+            Already have an account?{" "}
+            <span onClick={()=>setPage("login")}>
+              Login
+            </span>
+          </p>
 
         </div>
       </div>
 
-      {/* OTP MODAL */}
       {showOTP && (
-        <div>
-          <h3>Enter OTP</h3>
+        <div className="otp-modal-overlay">
+          <div className="otp-modal">
 
-          {otpInputs.map((digit, i) => (
-            <input
-              key={i}
-              id={`otp-${i}`}
-              value={digit}
-              onChange={(e)=>handleOtpChange(i, e.target.value)}
-            />
-          ))}
+            <h2>Security Verification</h2>
+            <p>We've sent a 6-digit code to <strong>{email}</strong></p>
 
-          <button onClick={handleVerifyOTP}>
-            Verify OTP
-          </button>
+            <div className="otp-input-container">
+              {otpInputs.map((digit, idx) => (
+                <input
+                  key={idx}
+                  id={`otp-${idx}`}
+                  type="text"
+                  maxLength="1"
+                  className="otp-input-box"
+                  value={digit}
+                  onChange={(e) => handleOtpChange(idx, e.target.value)}
+                />
+              ))}
+            </div>
+
+            <button className="otp-verify-btn" onClick={handleVerifyOTP}>
+              Verify & Create Account
+            </button>
+
+            <div className="otp-cancel" onClick={() => setShowOTP(false)}>
+              Cancel
+            </div>
+
+          </div>
         </div>
       )}
-
     </div>
   );
 }
