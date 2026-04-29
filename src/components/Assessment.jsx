@@ -38,7 +38,7 @@ export default function Assessment({ setPage, addInterest }) {
 
   const submitToBackend = async ()=>{
     try{
-      await fetch("http://localhost:8080/api/assessment",{
+      await fetch("https://fullstack-career-assessment-backend-production.up.railway.app/api/assessment",{
         method:"POST",
         headers:{
           "Content-Type":"application/json"

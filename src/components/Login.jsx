@@ -25,7 +25,7 @@ export default function Login({ setPage, setRole }) {
 
       console.log("Sending login request...");
 
-      const res = await fetch("http://localhost:8080/auth/login-user", {
+      const res = await fetch("https://fullstack-career-assessment-backend-production.up.railway.app/auth/login-user", {
 
         method: "POST",
 
