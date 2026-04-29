@@ -6,152 +6,107 @@ export default function Login({ setPage, setRole }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const BASE_URL = "https://fullstack-career-assessment-backend-production.up.railway.app";
 
   // =============================
-  // STUDENT LOGIN (BACKEND CONNECTED)
+  // STUDENT LOGIN
   // =============================
-
   const loginAsStudent = async () => {
 
     if (!username || !password) {
-
       alert("Please enter username and password");
-
       return;
-
     }
 
     try {
 
-      console.log("Sending login request...");
+      console.log("🚀 Sending login request...");
 
-      const res = await fetch("https://fullstack-career-assessment-backend-production.up.railway.app/auth/login-user", {
-
+      const res = await fetch(`${BASE_URL}/auth/login-user`, {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json"
         },
-
         body: JSON.stringify({
-
           email: username.trim(),
           password: password.trim()
-
         })
-
       });
-
 
       console.log("Response status:", res.status);
 
-
-      // if backend gives server error
-
-      if(res.status === 500){
-
-        alert("Server error (check Spring Boot)");
-
+      if (res.status === 500) {
+        alert("Server error (check backend)");
         return;
-
       }
 
-      if(res.status === 404){
-
+      if (res.status === 404) {
         alert("API not found (check controller)");
-
         return;
-
       }
-
-
-      // read response safely
 
       let data = null;
 
-      try{
-
+      try {
         data = await res.json();
-
-      }
-      catch{
-
+      } catch {
         console.log("No JSON returned");
-
       }
-
 
       console.log("User data:", data);
 
+      // ✅ success condition
+      if (res.ok && data) {
 
-      // if user exists
-
-      if (data && data.id) {
         localStorage.clear();
-        localStorage.setItem("studentId", data.id);
-        localStorage.setItem("studentName", data.name);
-        localStorage.setItem("studentEmail", data.email);
 
-        console.log("Login success, ID:", data.id);
+        localStorage.setItem("studentId", data.id || "");
+        localStorage.setItem("studentName", data.name || "");
+        localStorage.setItem("studentEmail", data.email || "");
 
-
-        // your original navigation
+        console.log("✅ Login success");
 
         setRole("student");
-
         setPage("dashboard");
 
-      }
-      else {
-
+      } else {
         alert("Invalid email or password OR user not signed up");
-
       }
 
-    }
-    catch (error) {
+    } catch (error) {
 
-      console.error("Backend error:", error);
-
+      console.error("❌ Backend error:", error);
       alert("Backend connection failed");
-
     }
-
   };
-
 
   // =============================
   // ADMIN LOGIN (UNCHANGED)
   // =============================
-
   const loginAsAdmin = () => {
 
     if (!username || !password) {
-
       alert("Please enter username and password");
-
       return;
-
     }
 
     setRole("admin");
-
     setPage("admin");
-
   };
-
 
   return (
     <div className="auth-container">
+
       <div className="auth-image">
         <img
           src="/images/careers-bg.png"
           alt="Careers Illustration"
         />
       </div>
-      
+
       <div className="auth-form-wrapper">
         <div className="auth-card">
+
           <h1>Welcome Back</h1>
           <p>Login to your account to continue</p>
 
@@ -195,6 +150,7 @@ export default function Login({ setPage, setRole }) {
               Sign up
             </span>
           </p>
+
         </div>
       </div>
     </div>

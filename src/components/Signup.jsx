@@ -11,8 +11,6 @@ export default function Signup({ setPage }) {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [passwordStrength, setPasswordStrength] = useState("");
-  const [showOTP, setShowOTP] = useState(false);
-  const [otpInputs, setOtpInputs] = useState(["", "", "", "", "", ""]);
 
   const BASE_URL = "https://fullstack-career-assessment-backend-production.up.railway.app";
 
@@ -27,7 +25,7 @@ export default function Signup({ setPage }) {
   };
 
   // =============================
-  // REQUEST OTP (FIXED ONLY)
+  // DIRECT SIGNUP (NO OTP)
   // =============================
   const handleSignupClick = async () => {
 
@@ -44,54 +42,7 @@ export default function Signup({ setPage }) {
     }
 
     try {
-      console.log("🚀 Sending OTP request...");
-
-      const res = await fetch(`${BASE_URL}/student/request-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email.trim()
-        })
-      });
-
-      console.log("Status:", res.status);
-
-      let data = null;
-      try {
-        data = await res.json();
-      } catch {}
-
-      console.log("Response:", data);
-
-      if (res.ok) {
-        alert("OTP sent to your email!");
-        setShowOTP(true);
-      } else {
-        alert("Failed to send OTP");
-      }
-
-    } catch (error) {
-      console.error("❌ Backend error:", error);
-      alert("Backend connection failed");
-    }
-  };
-
-  // =============================
-  // VERIFY OTP + SAVE USER
-  // =============================
-  const handleVerifyOTP = async () => {
-
-    const enteredOTP = otpInputs.join("");
-
-    if (enteredOTP.length !== 6) {
-      alert("Please enter a valid 6-digit code.");
-      return;
-    }
-
-    try {
-      console.log("🚀 Verifying OTP...");
+      console.log("🚀 Creating account...");
 
       const res = await fetch(`${BASE_URL}/student/save`, {
         method: "POST",
@@ -103,39 +54,23 @@ export default function Signup({ setPage }) {
           email: email.trim(),
           password: password.trim(),
           course: "Not Selected",
-          education: "",
-          otp: enteredOTP
+          education: ""
         })
       });
 
-      console.log("Verify status:", res.status);
+      console.log("Status:", res.status);
 
-      if(res.ok){
+      if (res.ok) {
         alert("Account created successfully!");
-        setShowOTP(false);
         setPage("login");
       } else {
         const errorData = await res.json().catch(() => ({}));
-        alert(errorData.message || "Invalid OTP or Signup failed");
+        alert(errorData.message || "Signup failed");
       }
 
-    } catch(error) {
-      console.error(error);
+    } catch (error) {
+      console.error("❌ Backend error:", error);
       alert("Backend connection failed");
-    }
-  };
-
-  // OTP input handling (UNCHANGED)
-  const handleOtpChange = (index, value) => {
-    if (isNaN(value)) return;
-
-    const newOtp = [...otpInputs];
-    newOtp[index] = value;
-    setOtpInputs(newOtp);
-
-    if (value && index < 5) {
-      const nextInput = document.getElementById(`otp-${index + 1}`);
-      if (nextInput) nextInput.focus();
     }
   };
 
@@ -242,38 +177,6 @@ export default function Signup({ setPage }) {
         </div>
       </div>
 
-      {showOTP && (
-        <div className="otp-modal-overlay">
-          <div className="otp-modal">
-
-            <h2>Security Verification</h2>
-            <p>We've sent a 6-digit code to <strong>{email}</strong></p>
-
-            <div className="otp-input-container">
-              {otpInputs.map((digit, idx) => (
-                <input
-                  key={idx}
-                  id={`otp-${idx}`}
-                  type="text"
-                  maxLength="1"
-                  className="otp-input-box"
-                  value={digit}
-                  onChange={(e) => handleOtpChange(idx, e.target.value)}
-                />
-              ))}
-            </div>
-
-            <button className="otp-verify-btn" onClick={handleVerifyOTP}>
-              Verify & Create Account
-            </button>
-
-            <div className="otp-cancel" onClick={() => setShowOTP(false)}>
-              Cancel
-            </div>
-
-          </div>
-        </div>
-      )}
     </div>
   );
 }
