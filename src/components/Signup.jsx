@@ -10,18 +10,16 @@ export default function Signup({ setPage }) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // --- NEW SECURITY STATES ---
-  const [passwordStrength, setPasswordStrength] = useState(""); // "weak", "medium", "strong"
+  const [passwordStrength, setPasswordStrength] = useState("");
   const [showOTP, setShowOTP] = useState(false);
   const [otpInputs, setOtpInputs] = useState(["", "", "", "", "", ""]);
 
+  // ✅ IMPORTANT (backend URL)
+  const BASE_URL = "https://fullstack-career-assessment-backend-production.up.railway.app";
+
 
   // =============================
-  // SAVE USER TO BACKEND (LOGIC SAME)
-  // =============================
-
-  // =============================
-  // PASSWORD STRENGTH LOGIC
+  // PASSWORD STRENGTH
   // =============================
   const checkStrength = (val) => {
     if (!val) { setPasswordStrength(""); return; }
@@ -30,50 +28,61 @@ export default function Signup({ setPage }) {
     else setPasswordStrength("strong");
   };
 
-  // =============================
-  // SAVE USER TO BACKEND (WITH OTP)
-  // =============================
 
+  // =============================
+  // REQUEST OTP
+  // =============================
   const handleSignupClick = async () => {
+
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       alert("Please fill all fields");
       return;
     }
+
     if(password !== confirmPassword){
       alert("Passwords do not match");
       return;
     }
-    
-    // Call backend to request real OTP
+
     try {
-      const res = await fetch("https://fullstack-career-assessment-backend-production.up.railway.app/student/request-otp", {
+      const res = await fetch(`${BASE_URL}/student/request-otp`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ email: email })
+        body: JSON.stringify({
+          email: email
+        })
       });
 
       if (res.ok) {
+        alert("OTP sent to your email!");
         setShowOTP(true);
       } else {
-        alert("Failed to send OTP. Please try again.");
+        alert("Failed to send OTP");
       }
+
     } catch (error) {
       console.log(error);
-      alert("Backend connection failed when requesting OTP");
+      alert("Backend connection failed");
     }
   };
 
+
+  // =============================
+  // VERIFY OTP + SAVE USER
+  // =============================
   const handleVerifyOTP = async () => {
+
     const enteredOTP = otpInputs.join("");
+
     if (enteredOTP.length !== 6) {
       alert("Please enter a valid 6-digit code.");
       return;
     }
 
     try {
-      const res = await fetch("https://fullstack-career-assessment-backend-production.up.railway.app/student/save", {
+      const res = await fetch(`${BASE_URL}/student/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -84,31 +93,33 @@ export default function Signup({ setPage }) {
           password: password,
           course: "Not Selected",
           education: "",
-          otp: enteredOTP // Sending the real OTP to the backend!
+          otp: enteredOTP
         })
       });
 
       if(res.ok){
-        alert("Account secured and created successfully!");
+        alert("Account created successfully!");
         setShowOTP(false);
         setPage("login");
       } else {
         const errorData = await res.json().catch(() => ({}));
         alert(errorData.message || "Invalid OTP or Signup failed");
       }
+
     } catch(error) {
       console.log(error);
       alert("Backend connection failed");
     }
   };
 
+
   const handleOtpChange = (index, value) => {
     if (isNaN(value)) return;
+
     const newOtp = [...otpInputs];
     newOtp[index] = value;
     setOtpInputs(newOtp);
 
-    // Auto-focus next input
     if (value && index < 5) {
       const nextInput = document.getElementById(`otp-${index + 1}`);
       if (nextInput) nextInput.focus();
@@ -116,9 +127,9 @@ export default function Signup({ setPage }) {
   };
 
 
-
   return (
     <div className="auth-container signup-override">
+
       <div className="auth-image">
         <img
           src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
@@ -128,6 +139,7 @@ export default function Signup({ setPage }) {
 
       <div className="auth-form-wrapper">
         <div className="auth-card">
+
           <h1>Create Account</h1>
           <p>Start your career journey</p>
 
@@ -141,6 +153,7 @@ export default function Signup({ setPage }) {
                 onChange={(e)=>setFirstName(e.target.value)}
               />
             </div>
+
             <div className="auth-input-group">
               <input
                 type="text"
@@ -168,14 +181,13 @@ export default function Signup({ setPage }) {
               placeholder="Password"
               className="auth-input"
               value={password}
-              onChange={(e) => {
+              onChange={(e)=>{
                 setPassword(e.target.value);
                 checkStrength(e.target.value);
               }}
             />
           </div>
-          
-          {/* PASSWORD STRENGTH INDICATOR */}
+
           {password && (
             <div className="password-strength-container">
               <div className={`password-strength-fill strength-${passwordStrength}`}></div>
@@ -214,16 +226,18 @@ export default function Signup({ setPage }) {
               Login
             </span>
           </p>
+
         </div>
       </div>
 
-      {/* ================= SIMULATED OTP MODAL ================= */}
+      {/* OTP MODAL */}
       {showOTP && (
         <div className="otp-modal-overlay">
           <div className="otp-modal">
+
             <h2>Security Verification</h2>
-            <p>We've sent a 6-digit code to <strong>{email}</strong> to verify your identity.</p>
-            
+            <p>We've sent a 6-digit code to <strong>{email}</strong></p>
+
             <div className="otp-input-container">
               {otpInputs.map((digit, idx) => (
                 <input
@@ -234,13 +248,6 @@ export default function Signup({ setPage }) {
                   className="otp-input-box"
                   value={digit}
                   onChange={(e) => handleOtpChange(idx, e.target.value)}
-                  onKeyDown={(e) => {
-                     // Handle backspace to go to previous input
-                     if (e.key === "Backspace" && !digit && idx > 0) {
-                        const prevInput = document.getElementById(`otp-${idx - 1}`);
-                        if (prevInput) prevInput.focus();
-                     }
-                  }}
                 />
               ))}
             </div>
@@ -248,9 +255,11 @@ export default function Signup({ setPage }) {
             <button className="otp-verify-btn" onClick={handleVerifyOTP}>
               Verify & Create Account
             </button>
+
             <div className="otp-cancel" onClick={() => setShowOTP(false)}>
-              Cancel Setup
+              Cancel
             </div>
+
           </div>
         </div>
       )}
