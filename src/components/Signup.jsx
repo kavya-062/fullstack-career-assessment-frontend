@@ -158,15 +158,6 @@ export default function Signup({ setPage }) {
             Sign Up
           </button>
 
-          <div className="auth-divider">
-            <span>OR</span>
-          </div>
-
-          <button className="auth-google-btn">
-            <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="google" />
-            Continue with Google
-          </button>
-
           <p className="auth-footer-text">
             Already have an account?{" "}
             <span onClick={()=>setPage("login")}>
